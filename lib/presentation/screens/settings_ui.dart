@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:local_storage_demo/core/utils/interactive_popup.dart';
+import 'package:local_storage_demo/presentation/widgets/radio_selector.dart';
+import 'package:local_storage_demo/presentation/widgets/settings_tile.dart';
 import 'package:local_storage_demo/presentation/widgets/settings_toggle.dart';
-
-import '../widgets/settings_tile.dart';
 
 class SettingsUi extends StatefulWidget {
   const SettingsUi({super.key});
@@ -33,7 +34,13 @@ class _SettingsUiState extends State<SettingsUi> {
           SettingsTile(
             title: 'Name',
             trailing: 'Chidiebube Iroezindu',
-            onTap: () {},
+            onTap: () {
+              showInteractiveDialog(
+                context,
+                header: 'What is your name?',
+                child: TextField(),
+              );
+            },
           ),
 
           // username
@@ -73,7 +80,28 @@ class _SettingsUiState extends State<SettingsUi> {
           // theme
           SettingsTile(
             title: 'App Appearance',
-            onTap: () {},
+            onTap: () {
+              showInteractiveDialog(
+                context,
+                header: 'Theme',
+                child: Column(
+                  children: [
+                    RadioSelector(
+                      'system',
+                      value: 'System',
+                    ),
+                    RadioSelector(
+                      'dark',
+                      value: 'Dark',
+                    ),
+                    RadioSelector(
+                      'light',
+                      value: 'Light',
+                    ),
+                  ],
+                ),
+              );
+            },
           ),
 
           // Activity Indicator
