@@ -1,28 +1,24 @@
 import 'package:flutter/material.dart';
 
-class RadioSelector extends StatefulWidget {
-  final Object value;
-  Object? groupValue;
-  RadioSelector(this.groupValue, {super.key, required this.value});
+class RadioSelector extends StatelessWidget {
+  final String value;
+  final String? groupValue;
+  final ValueChanged<String?> onChanged;
 
-  @override
-  State<RadioSelector> createState() => _RadioSelectorState();
-}
+  const RadioSelector({
+    super.key,
+    required this.value,
+    required this.groupValue,
+    required this.onChanged,
+  });
 
-class _RadioSelectorState extends State<RadioSelector> {
   @override
   Widget build(BuildContext context) {
-
-    return RadioListTile(
-      title: Text(widget.value.toString()),
-      value: widget.value,
-      groupValue: widget.groupValue,
-      onChanged: (selected) {
-        // if (groupValue != null) {}
-        setState(() {
-          widget.groupValue = selected;
-        });
-      },
+    return RadioListTile<String>(
+      title: Text(value.toString()),
+      value: value,
+      groupValue: groupValue,
+      onChanged: onChanged,
     );
   }
 }

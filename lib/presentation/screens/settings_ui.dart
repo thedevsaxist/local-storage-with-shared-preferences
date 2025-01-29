@@ -12,6 +12,8 @@ class SettingsUi extends StatefulWidget {
 }
 
 class _SettingsUiState extends State<SettingsUi> {
+  String? groupValue = 'System';
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -38,7 +40,7 @@ class _SettingsUiState extends State<SettingsUi> {
               showInteractiveDialog(
                 context,
                 header: 'What is your name?',
-                child: TextField(),
+                child: const TextField(),
               );
             },
           ),
@@ -84,21 +86,53 @@ class _SettingsUiState extends State<SettingsUi> {
               showInteractiveDialog(
                 context,
                 header: 'Theme',
-                child: Column(
-                  children: [
-                    RadioSelector(
-                      'system',
-                      value: 'System',
-                    ),
-                    RadioSelector(
-                      'dark',
-                      value: 'Dark',
-                    ),
-                    RadioSelector(
-                      'light',
-                      value: 'Light',
-                    ),
-                  ],
+                child: StatefulBuilder(
+                  builder: (context, setState) {
+                    return Column(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        RadioSelector(
+                          value: 'System',
+                          groupValue: groupValue,
+                          onChanged: (selected) {
+                            setState(() {
+                              groupValue = selected;
+                            });
+
+                            this.setState(() {
+                              groupValue = selected;
+                            });
+                          },
+                        ),
+                        RadioSelector(
+                          value: 'Dark',
+                          groupValue: groupValue,
+                          onChanged: (selected) {
+                            setState(() {
+                              groupValue = selected;
+                            });
+
+                            this.setState(() {
+                              groupValue = selected;
+                            });
+                          },
+                        ),
+                        RadioSelector(
+                          value: 'Light',
+                          groupValue: groupValue,
+                          onChanged: (selected) {
+                            setState(() {
+                              groupValue = selected;
+                            });
+
+                            this.setState(() {
+                              groupValue = selected;
+                            });
+                          },
+                        ),
+                      ],
+                    );
+                  },
                 ),
               );
             },

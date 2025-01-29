@@ -5,27 +5,13 @@ void showInteractiveDialog(BuildContext context,
   showDialog(
     context: context,
     builder: (BuildContext context) {
-      return Dialog(
-        child: Padding(
-          padding: const EdgeInsets.all(30.0),
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(
-                header,
-                style: Theme.of(context).textTheme.titleLarge,
-              ),
-              // const Divider(
-              //   height: 30,
-              // ),
-              child,
-              // const Divider(
-              //   height: 30,
-              // ),
-            ],
-          ),
+      return AlertDialog(
+        title: Text(
+          header,
+          style: Theme.of(context).textTheme.titleLarge,
         ),
+        contentPadding: const EdgeInsets.all(30.0),
+        content: child,
       );
     },
   );
