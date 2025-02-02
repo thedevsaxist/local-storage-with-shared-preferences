@@ -6,6 +6,7 @@ import 'core/themes.dart';
 import 'data/repositories/shared_prefs_repository.dart';
 import 'presentation/screens/settings_ui.dart';
 import 'presentation/state/settings_toggle_view_model.dart';
+import 'presentation/state/theme_mode_selector.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -14,9 +15,17 @@ void main() async {
   await SharedPrefsService().initPrefs();
 
   runApp(
-    ChangeNotifierProvider(
-      create: (context) =>
-          SettingsToggleViewModel(SharedPrefsRepository()),
+    MultiProvider(
+      providers: [
+        ChangeNotifierProvider(
+          create: (context) => SettingsToggleViewModel(
+            SharedPrefsRepository(),
+          ),
+        ),
+        ChangeNotifierProvider(
+          create: (context) => ThemeModeSelector(),
+        ),
+      ],
       child: const LocalStorageDemo(),
     ),
   );
@@ -27,12 +36,14 @@ class LocalStorageDemo extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    ThemeMode themeMode = context.watch<ThemeModeSelector>().themeMode;
+
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'Flutter Demo',
       theme: appTheme,
       home: const SettingsUi(),
-      themeMode: ThemeMode.system,
+      themeMode: themeMode,
       darkTheme: darkTheme,
     );
   }

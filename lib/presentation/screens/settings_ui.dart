@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:local_storage_demo/core/utils/interactive_popup.dart';
 import 'package:local_storage_demo/data/repositories/shared_prefs_repository.dart';
+import 'package:local_storage_demo/presentation/state/theme_mode_selector.dart';
 
 import 'package:local_storage_demo/presentation/widgets/radio_selector.dart';
 import 'package:local_storage_demo/presentation/widgets/settings_tile.dart';
 import 'package:local_storage_demo/presentation/widgets/settings_toggle.dart';
+import 'package:provider/provider.dart';
 
 class SettingsUi extends StatefulWidget {
   const SettingsUi({super.key});
@@ -93,43 +95,59 @@ class _SettingsUiState extends State<SettingsUi> {
                     return Column(
                       mainAxisSize: MainAxisSize.min,
                       children: [
-                        RadioSelector(
-                          value: 'System',
-                          groupValue: groupValue,
-                          onChanged: (selected) {
-                            setState(() {
-                              groupValue = selected;
-                            });
+                        Consumer<ThemeModeSelector>(
+                          builder: (context, value, child) {
+                            return RadioSelector(
+                              value: 'System',
+                              groupValue: groupValue,
+                              onChanged: (selected) {
+                                setState(() {
+                                  groupValue = selected;
+                                  value.changeToSystem();
+                                });
 
-                            this.setState(() {
-                              groupValue = selected;
-                            });
+                                this.setState(() {
+                                  groupValue = selected;
+                                });
+                              },
+                            );
                           },
                         ),
-                        RadioSelector(
-                          value: 'Dark',
-                          groupValue: groupValue,
-                          onChanged: (selected) {
-                            setState(() {
-                              groupValue = selected;
-                            });
+                        Consumer<ThemeModeSelector>(
+                          builder: (context, value, child) {
+                            return RadioSelector(
+                              value: 'Dark',
+                              groupValue: groupValue,
+                              onChanged: (selected) {
+                                setState(() {
+                                  groupValue = selected;
+                                  value.changeToDarkMode();
+                                });
 
-                            this.setState(() {
-                              groupValue = selected;
-                            });
+                                this.setState(() {
+                                  groupValue = selected;
+                                });
+                              },
+                            );
                           },
+                          // child:
                         ),
-                        RadioSelector(
-                          value: 'Light',
-                          groupValue: groupValue,
-                          onChanged: (selected) {
-                            setState(() {
-                              groupValue = selected;
-                            });
+                        Consumer<ThemeModeSelector>(
+                          builder: (context, value, child) {
+                            return RadioSelector(
+                              value: 'Light',
+                              groupValue: groupValue,
+                              onChanged: (selected) {
+                                setState(() {
+                                  groupValue = selected;
+                                  value.changeToLightMode();
+                                });
 
-                            this.setState(() {
-                              groupValue = selected;
-                            });
+                                this.setState(() {
+                                  groupValue = selected;
+                                });
+                              },
+                            );
                           },
                         ),
                       ],
