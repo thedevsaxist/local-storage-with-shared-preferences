@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:local_storage_demo/core/utils/interactive_popup.dart';
+import 'package:local_storage_demo/data/repositories/shared_prefs_repository.dart';
+
 import 'package:local_storage_demo/presentation/widgets/radio_selector.dart';
 import 'package:local_storage_demo/presentation/widgets/settings_tile.dart';
 import 'package:local_storage_demo/presentation/widgets/settings_toggle.dart';
@@ -13,6 +15,8 @@ class SettingsUi extends StatefulWidget {
 
 class _SettingsUiState extends State<SettingsUi> {
   String? groupValue = 'System';
+  String notificationKey = 'notification';
+  String activityIndicatorKey = 'activity_indicator';
 
   @override
   Widget build(BuildContext context) {
@@ -20,9 +24,7 @@ class _SettingsUiState extends State<SettingsUi> {
       appBar: AppBar(
         title: Text(
           'Settings',
-          style: Theme.of(context).textTheme.displaySmall?.copyWith(
-              // color: Colors.deepOrange.shade900,
-              ),
+          style: Theme.of(context).textTheme.displaySmall,
         ),
         centerTitle: false,
       ),
@@ -139,15 +141,23 @@ class _SettingsUiState extends State<SettingsUi> {
           ),
 
           // Activity Indicator
-          const SettingsToggle(title: 'Activity Indicator'),
+          SettingsToggle(
+            title: 'Activity Indicator',
+            toggleKey: activityIndicatorKey,
+          ),
 
-          // notifications
-          const SettingsToggle(title: 'Notifications'),
+          // notification
+          SettingsToggle(
+            title: 'Notification',
+            toggleKey: notificationKey,
+          ),
 
           // clear local storage
           SettingsTile(
             title: 'Clear Cache',
-            onTap: () {},
+            onTap: () async {
+              await SharedPrefsRepository().clearCache();
+            },
           ),
         ],
       ),

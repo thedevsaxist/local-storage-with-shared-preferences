@@ -34,7 +34,7 @@ class SharedPrefsService {
     await _preferences?.setBool(key, state);
   }
 
-  /// retrieves the last toggle state of the switch to local storage [SharedPrefsService]
+  /// retrieves the last toggle state of the switch from local storage [SharedPrefsService]
   bool? getToggleState(String key) {
     return _preferences?.getBool(key);
   }

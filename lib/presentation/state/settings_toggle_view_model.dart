@@ -18,7 +18,6 @@ class SettingsToggleViewModel with ChangeNotifier {
     /// If it does, assign that value to the [_isToggled] setter, and notify the listeners.
     if (toggleState != null) {
       _isToggled = toggleState;
-      notifyListeners();
     }
   }
 
