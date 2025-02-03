@@ -1,12 +1,5 @@
-import 'package:flutter/material.dart';
-import 'package:local_storage_demo/core/utils/interactive_popup.dart';
-import 'package:local_storage_demo/data/repositories/shared_prefs_repository.dart';
-import 'package:local_storage_demo/presentation/state/theme_mode_selector_view_model.dart';
 
-import 'package:local_storage_demo/presentation/widgets/radio_selector.dart';
-import 'package:local_storage_demo/presentation/widgets/settings_tile.dart';
-import 'package:local_storage_demo/presentation/widgets/settings_toggle.dart';
-import 'package:provider/provider.dart';
+import 'screens_barrel.dart';
 
 class SettingsUi extends StatefulWidget {
   const SettingsUi({super.key});
@@ -16,22 +9,24 @@ class SettingsUi extends StatefulWidget {
 }
 
 class _SettingsUiState extends State<SettingsUi> {
-  String notificationKey = 'notification';
-  String activityIndicatorKey = 'activity_indicator';
-
   @override
   void initState() {
     super.initState();
 
-    final themeModeViewModel =
-        Provider.of<ThemeModeSelectorViewModel>(context, listen: false);
-    themeModeViewModel.getThemeName();
+    Provider.of<SettingsUiViewModel>(context, listen: false)
+        .initThemeMode(context);
+
+    Provider.of<SettingsUiViewModel>(context, listen: false).getUserData();
   }
 
   @override
   Widget build(BuildContext context) {
     String? groupValue =
         Provider.of<ThemeModeSelectorViewModel>(context).themeName;
+
+    final settingsUiViewModel =
+        Provider.of<SettingsUiViewModel>(context, listen: true);
+
     return Scaffold(
       appBar: AppBar(
         title: Text(
@@ -49,12 +44,14 @@ class _SettingsUiState extends State<SettingsUi> {
           // name
           SettingsTile(
             title: 'Name',
-            trailing: 'Chidiebube Iroezindu',
+            trailing: settingsUiViewModel.user?.name ?? '',
             onTap: () {
               showInteractiveDialog(
                 context,
                 header: 'What is your name?',
-                child: const TextField(),
+                child: TextField(
+                  controller: settingsUiViewModel.nameController,
+                ),
               );
             },
           ),
@@ -62,8 +59,16 @@ class _SettingsUiState extends State<SettingsUi> {
           // username
           SettingsTile(
             title: 'Username',
-            trailing: 'thedevsaxist',
-            onTap: () {},
+            trailing: settingsUiViewModel.user?.userName ?? '',
+            onTap: () {
+              showInteractiveDialog(
+                context,
+                header: 'What should we call you?',
+                child: TextField(
+                  controller: settingsUiViewModel.usernameController,
+                ),
+              );
+            },
           ),
 
           // birthday
@@ -76,15 +81,31 @@ class _SettingsUiState extends State<SettingsUi> {
           // phone number
           SettingsTile(
             title: 'Phone Number',
-            trailing: '+2347088391516',
-            onTap: () {},
+            trailing: settingsUiViewModel.user?.phoneNumber ?? '',
+            onTap: () {
+              showInteractiveDialog(
+                context,
+                header: 'Enter your phone number?',
+                child: TextField(
+                  controller: settingsUiViewModel.phoneNumberController,
+                ),
+              );
+            },
           ),
 
           // email
           SettingsTile(
             title: 'Email',
-            trailing: 'chidiebubeiroezindu@gmail.com',
-            onTap: () {},
+            trailing: settingsUiViewModel.user?.email ?? '',
+            onTap: () {
+              showInteractiveDialog(
+                context,
+                header: 'Enter your email?',
+                child: TextField(
+                  controller: settingsUiViewModel.emailController,
+                ),
+              );
+            },
           ),
 
           // language
@@ -171,13 +192,13 @@ class _SettingsUiState extends State<SettingsUi> {
           // Activity Indicator
           SettingsToggle(
             title: 'Activity Indicator',
-            toggleKey: activityIndicatorKey,
+            toggleKey: settingsUiViewModel.activityIndicatorKey,
           ),
 
           // notification
           SettingsToggle(
             title: 'Notification',
-            toggleKey: notificationKey,
+            toggleKey: settingsUiViewModel.notificationKey,
           ),
 
           // clear local storage
@@ -185,7 +206,17 @@ class _SettingsUiState extends State<SettingsUi> {
             title: 'Clear Cache',
             onTap: () async {
               await SharedPrefsRepository().clearCache();
+              clearUserData();
             },
+          ),
+
+          ElevatedButton(
+            onPressed: () {
+              // setState(() {
+              settingsUiViewModel.updateUserDetails();
+              // });
+            },
+            child: const Text('Save Details'),
           ),
         ],
       ),

@@ -2,10 +2,8 @@ import 'barrel.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-
-  // initialize hive
-  await Hive.initFlutter();
-  await Hive.openBox('user_data');
+  
+  await initHive();
 
   // initialize shared preferences in the main function of the app.
   await SharedPrefsService().initPrefs();
@@ -13,6 +11,9 @@ void main() async {
   runApp(
     MultiProvider(
       providers: [
+        ChangeNotifierProvider(
+          create: (context) => SettingsUiViewModel(),
+        ),
         ChangeNotifierProvider(
           create: (context) => SettingsToggleViewModel(
             SettingsToggleRepository(),
