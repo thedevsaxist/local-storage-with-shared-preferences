@@ -9,14 +9,23 @@ class ThemeModeSelectorViewModel extends ChangeNotifier {
   ThemeMode _themeMode = ThemeMode.system;
   ThemeMode get themeMode => _themeMode;
 
+  String _themeName = 'system';
+  String get themeName => _themeName;
+
   Future<void> saveThemeMode(ThemeMode themeMode) async {
     _themeMode = themeMode;
+    _themeName = themeMode.name;
     notifyListeners();
     await _repository.saveTheme(themeMode);
   }
 
   Future<void> getThemeMode() async {
     _themeMode = await _repository.getTheme();
+    notifyListeners();
+  }
+
+  Future<void> getThemeName() async{
+    _themeName = await _repository.getThemeName();
     notifyListeners();
   }
 }

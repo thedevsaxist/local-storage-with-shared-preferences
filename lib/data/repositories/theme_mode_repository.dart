@@ -14,4 +14,8 @@ class ThemeModeRepository {
   ThemeMode getTheme() {
     return _sharedPrefsService.getTheme();
   }
+
+  String getThemeName(){
+    return _sharedPrefsService.getThemeName();
+  }
 }

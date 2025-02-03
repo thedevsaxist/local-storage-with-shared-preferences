@@ -40,9 +40,10 @@ class SharedPrefsService {
     return _preferences?.getBool(key);
   }
 
-  /// saves the theme mode to local storage [SharedPrefsService]
+  /// saves the theme mode and theme name to local storage [SharedPrefsService] 
   Future<void> saveTheme(ThemeMode themeMode) async {
-    await _preferences?.setInt('themeMode', themeMode.index);
+    await _preferences?.setInt('themeMode', themeMode.index);  // theme mode
+    await _preferences?.setString('themeName', themeMode.name);  // theme name
   }
 
   /// retrieves the theme mode from local storage [SharedPrefsService]
@@ -50,6 +51,11 @@ class SharedPrefsService {
     final themeIndex =
         _preferences?.getInt('themeMode') ?? ThemeMode.system.index;
     return ThemeMode.values[themeIndex];
+  }
+
+  String getThemeName() {
+    final themeName = _preferences?.getString('themeName') ?? 'system';
+    return themeName;
   }
 
   /// removes all saved data in local storage [SharedPrefsService]

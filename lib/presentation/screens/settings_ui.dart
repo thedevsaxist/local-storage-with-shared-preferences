@@ -16,12 +16,22 @@ class SettingsUi extends StatefulWidget {
 }
 
 class _SettingsUiState extends State<SettingsUi> {
-  String? groupValue = 'System';
   String notificationKey = 'notification';
   String activityIndicatorKey = 'activity_indicator';
 
   @override
+  void initState() {
+    super.initState();
+
+    final themeModeViewModel =
+        Provider.of<ThemeModeSelectorViewModel>(context, listen: false);
+    themeModeViewModel.getThemeName();
+  }
+
+  @override
   Widget build(BuildContext context) {
+    String? groupValue =
+        Provider.of<ThemeModeSelectorViewModel>(context).themeName;
     return Scaffold(
       appBar: AppBar(
         title: Text(
@@ -98,7 +108,7 @@ class _SettingsUiState extends State<SettingsUi> {
                         Consumer<ThemeModeSelectorViewModel>(
                           builder: (context, themeMode, child) {
                             return RadioSelector(
-                              value: 'System',
+                              value: 'System'.toLowerCase(),
                               groupValue: groupValue,
                               onChanged: (selected) {
                                 setState(() {
@@ -116,7 +126,7 @@ class _SettingsUiState extends State<SettingsUi> {
                         Consumer<ThemeModeSelectorViewModel>(
                           builder: (context, themeMode, child) {
                             return RadioSelector(
-                              value: 'Dark',
+                              value: 'Dark'.toLowerCase(),
                               groupValue: groupValue,
                               onChanged: (selected) {
                                 setState(() {
@@ -135,7 +145,7 @@ class _SettingsUiState extends State<SettingsUi> {
                         Consumer<ThemeModeSelectorViewModel>(
                           builder: (context, themeMode, child) {
                             return RadioSelector(
-                              value: 'Light',
+                              value: 'Light'.toLowerCase(),
                               groupValue: groupValue,
                               onChanged: (selected) {
                                 setState(() {
