@@ -1,23 +1,22 @@
 # Local Storage Demo
 
-Implementation of local storage using Hive, SharedPreferences and SQLite.
+Implementation of local storage using SharedPreferences.
 
 ## Introduction
 
-This project demonstrates how to implement local storage in a Flutter application using three different methods: Hive, SharedPreferences, and SQLite. Each method has its own advantages and use cases, and this project provides examples of how to use each one.
+This project demonstrates how to implement local storage in a Flutter application using SharedPreferences. SharedPreferences is a simple key-value storage solution that is easy to use and suitable for storing small amounts of data.
 
 ## Features
 
-- Store and retrieve data using Hive
 - Store and retrieve data using SharedPreferences
-- Store and retrieve data using SQLite
 
 ## Getting Started
 
 ### Prerequisites
 
-- Flutter SDK
-- Dart SDK
+- Flutter SDK (version 2.0.0 or higher)
+- Dart SDK (version 2.12.0 or higher)
+- A code editor (such as Visual Studio Code or Android Studio)
 
 ### Installation
 
@@ -36,22 +35,6 @@ This project demonstrates how to implement local storage in a Flutter applicatio
 
 ## Usage
 
-### Hive
-
-1. Initialize Hive in your main file:
-    ```dart
-    void main() async {
-      await Hive.initFlutter();
-      runApp(MyApp());
-    }
-    ```
-2. Open a box and use it to store and retrieve data:
-    ```dart
-    var box = await Hive.openBox('myBox');
-    box.put('key', 'value');
-    var value = box.get('key');
-    ```
-
 ### SharedPreferences
 
 1. Store data using SharedPreferences:
@@ -63,29 +46,6 @@ This project demonstrates how to implement local storage in a Flutter applicatio
     ```dart
     SharedPreferences prefs = await SharedPreferences.getInstance();
     String value = prefs.getString('key');
-    ```
-
-### SQLite
-
-1. Initialize the database:
-    ```dart
-    var database = openDatabase(
-      'my_db.db',
-      version: 1,
-      onCreate: (db, version) {
-        return db.execute(
-          "CREATE TABLE my_table(id INTEGER PRIMARY KEY, value TEXT)",
-        );
-      },
-    );
-    ```
-2. Insert and retrieve data:
-    ```dart
-    await database.insert(
-      'my_table',
-      {'id': 1, 'value': 'value'},
-    );
-    List<Map> result = await database.query('my_table');
     ```
 
 ## Contributing
