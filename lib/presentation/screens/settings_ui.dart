@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:local_storage_demo/core/utils/interactive_popup.dart';
 import 'package:local_storage_demo/data/repositories/shared_prefs_repository.dart';
-import 'package:local_storage_demo/presentation/state/theme_mode_selector.dart';
+import 'package:local_storage_demo/presentation/state/theme_mode_selector_view_model.dart';
 
 import 'package:local_storage_demo/presentation/widgets/radio_selector.dart';
 import 'package:local_storage_demo/presentation/widgets/settings_tile.dart';
@@ -95,15 +95,15 @@ class _SettingsUiState extends State<SettingsUi> {
                     return Column(
                       mainAxisSize: MainAxisSize.min,
                       children: [
-                        Consumer<ThemeModeSelector>(
-                          builder: (context, value, child) {
+                        Consumer<ThemeModeSelectorViewModel>(
+                          builder: (context, themeMode, child) {
                             return RadioSelector(
                               value: 'System',
                               groupValue: groupValue,
                               onChanged: (selected) {
                                 setState(() {
                                   groupValue = selected;
-                                  value.changeToSystem();
+                                  themeMode.saveThemeMode(ThemeMode.system);
                                 });
 
                                 this.setState(() {
@@ -113,15 +113,15 @@ class _SettingsUiState extends State<SettingsUi> {
                             );
                           },
                         ),
-                        Consumer<ThemeModeSelector>(
-                          builder: (context, value, child) {
+                        Consumer<ThemeModeSelectorViewModel>(
+                          builder: (context, themeMode, child) {
                             return RadioSelector(
                               value: 'Dark',
                               groupValue: groupValue,
                               onChanged: (selected) {
                                 setState(() {
                                   groupValue = selected;
-                                  value.changeToDarkMode();
+                                  themeMode.saveThemeMode(ThemeMode.dark);
                                 });
 
                                 this.setState(() {
@@ -132,15 +132,15 @@ class _SettingsUiState extends State<SettingsUi> {
                           },
                           // child:
                         ),
-                        Consumer<ThemeModeSelector>(
-                          builder: (context, value, child) {
+                        Consumer<ThemeModeSelectorViewModel>(
+                          builder: (context, themeMode, child) {
                             return RadioSelector(
                               value: 'Light',
                               groupValue: groupValue,
                               onChanged: (selected) {
                                 setState(() {
                                   groupValue = selected;
-                                  value.changeToLightMode();
+                                  themeMode.saveThemeMode(ThemeMode.light);
                                 });
 
                                 this.setState(() {

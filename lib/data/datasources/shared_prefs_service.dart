@@ -1,3 +1,4 @@
+import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class SharedPrefsService {
@@ -37,6 +38,18 @@ class SharedPrefsService {
   /// retrieves the last toggle state of the switch from local storage [SharedPrefsService]
   bool? getToggleState(String key) {
     return _preferences?.getBool(key);
+  }
+
+  /// saves the theme mode to local storage [SharedPrefsService]
+  Future<void> saveTheme(ThemeMode themeMode) async {
+    await _preferences?.setInt('themeMode', themeMode.index);
+  }
+
+  /// retrieves the theme mode from local storage [SharedPrefsService]
+  ThemeMode getTheme() {
+    final themeIndex =
+        _preferences?.getInt('themeMode') ?? ThemeMode.system.index;
+    return ThemeMode.values[themeIndex];
   }
 
   /// removes all saved data in local storage [SharedPrefsService]

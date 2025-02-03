@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:local_storage_demo/data/repositories/shared_prefs_repository.dart';
+import 'package:local_storage_demo/data/repositories/settings_toggle_repository.dart';
 
 class SettingsToggleViewModel with ChangeNotifier {
-  final SharedPrefsRepository _repository;
+  final SettingsToggleRepository _repository;
 
   SettingsToggleViewModel(this._repository);
 
