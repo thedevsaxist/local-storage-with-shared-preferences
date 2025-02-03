@@ -20,11 +20,13 @@ class ThemeModeSelectorViewModel extends ChangeNotifier {
   }
 
   Future<void> getThemeMode() async {
+    // ignore: await_only_futures
     _themeMode = await _repository.getTheme();
     notifyListeners();
   }
 
   Future<void> getThemeName() async{
+    // ignore: await_only_futures
     _themeName = await _repository.getThemeName();
     notifyListeners();
   }
